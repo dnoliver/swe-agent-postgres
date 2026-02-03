@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_DB: titanic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d:ro
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - ./servers.json:/pgadmin/servers.json
+
+  agent:
+    image: python:3.12
+    container_name: agent
+    tty: true
+    stdin_open: true
+    environment:
+      PGHOST: host.docker.internal
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: titanic
+      PGPASSWORD: postgres
+    command: >
+      sh -c "
+        apt-get -qq update &&
+        apt-get install -qq -y postgresql-client &&
+        pip install --quiet --upgrade pip --root-user-action ignore &&
+        pip install --quiet mini-swe-agent --root-user-action ignore &&
+        pip install --quiet sqlfluff --root-user-action ignore &&
+        mini-extra config set ANTHROPIC_API_KEY \"$ANTHROPIC_API_KEY\" &&
+        mini-extra config set MSWEA_MODEL_NAME \"$MSWEA_MODEL_NAME\" &&
+        mini-extra config set MSWEA_CONFIGURED true && \
+        mini --task /agent/TASK.md --cost-limit=2 --output /agent/trajectory.json --yolo --exit-immediately
+      "
+    volumes:
+      - ./agent:/agent
+
+volumes:
+  pgdata:
