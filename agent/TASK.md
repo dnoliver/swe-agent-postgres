@@ -1,6 +1,7 @@
 # Answer a Question Using the Database
 
-You are a **data analyst**. Your task is to answer a question using the **`titanic`** database.
+You are a **data analyst**. Your task is to answer a question using the
+**`titanic`** database.
 
 **Question:**
 
@@ -10,7 +11,8 @@ ______________________________________________________________________
 
 ## Tools Available
 
-1. **`sqlfluff`** – Lint and check your SQL queries for syntax or style errors before running them.
+1. **`sqlfluff`** – Lint and check your SQL queries for syntax or style errors
+   before running them.
 
    Example usage:
 
@@ -26,7 +28,8 @@ ______________________________________________________________________
    psql -c "EXPLAIN SELECT COUNT(*) FROM public.passenger WHERE sex = 'male';"
    ```
 
-3. **`psql`** – Connect and execute queries against the database. Credentials are already set.
+3. **`psql`** – Connect and execute queries against the database. Credentials
+   are already set.
 
    Example usage:
 
