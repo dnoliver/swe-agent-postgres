@@ -23,7 +23,7 @@ After you determine the correct query and final answer:
 
    ```text
    result.txt
-   ```text
+   ```
 
 ### File Writing Instructions
 
@@ -43,7 +43,8 @@ echo "577" > result.txt
 - `result.txt` must contain ONLY the final answer.
 - Do NOT include explanations in either file.
 - Ensure the files are created in same directory as the TASK.md file.
-- The query in `result.sql` must exactly match the query used to generate the answer.
+- The query in `result.sql` must exactly match the query used to generate the
+  answer.
 
 ## Tools Available
 
@@ -92,5 +93,5 @@ This will return the total number of male passengers on the Titanic.
 
 ## Notes
 
-* Always lint your queries before execution.
-* Use `EXPLAIN` to preview query execution and avoid mistakes.
+- Always lint your queries before execution.
+- Use `EXPLAIN` to preview query execution and avoid mistakes.
