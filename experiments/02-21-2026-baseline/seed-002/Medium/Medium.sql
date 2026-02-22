@@ -1,0 +1,15 @@
+CREATE TABLE Athlete (athlete_id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE Tournament (tournament_id INTEGER PRIMARY KEY, athlete_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Format (format_id INTEGER PRIMARY KEY, tournament_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Medal (medal_id INTEGER PRIMARY KEY, format_id INTEGER, type TEXT NOT NULL, year INTEGER, location TEXT NOT NULL);
+CREATE TABLE PersonalInformation (info_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, athlete_id INTEGER, birth_year INTEGER, birth_month INTEGER, birth_day INTEGER);
+INSERT INTO Athlete (athlete_id, name) VALUES (1, 'Elisabetta Mijno');
+INSERT INTO PersonalInformation (athlete_id, birth_year, birth_month, birth_day) VALUES (1, 1986, 1, 10);
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (1, 1, 'Paralympic Games');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (1, 1, 'Women''s individual recurve W1');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (1, 1, 'MedalSilver', 2012, 'London');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (2, 1, 'Mixed team recurve open');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (2, 2, 'MedalBronze', 2016, 'Rio de Janeiro');
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (2, 1, 'European Para Championships');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (3, 2, 'Women''s individual recurve open');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (3, 3, 'MedalGold', 2023, 'Rotterdam');

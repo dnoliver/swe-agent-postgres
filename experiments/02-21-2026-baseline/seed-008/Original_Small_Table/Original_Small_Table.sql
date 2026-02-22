@@ -1,0 +1,13 @@
+CREATE TABLE Athlete (athlete_id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE Tournament (tournament_id INTEGER PRIMARY KEY, athlete_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Format (format_id INTEGER PRIMARY KEY, tournament_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Medal (medal_id INTEGER PRIMARY KEY, format_id INTEGER, type TEXT NOT NULL, year INTEGER, location TEXT NOT NULL);
+CREATE TABLE PersonalInformation (info_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, athlete_id INTEGER, birth_year INTEGER, birth_month INTEGER, birth_day INTEGER);
+INSERT INTO Athlete (athlete_id, name) VALUES (1, 'Bailey Andison');
+INSERT INTO PersonalInformation (athlete_id, birth_year, birth_month, birth_day) VALUES (1, 1997, 11, 13);
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (1, 1, 'World Championships (SC)');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (1, 1, '4x100 m freestyle');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (1, 1, 'MedalGold', 2021, 'Abu Dhabi');
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (2, 1, 'Pan American Games');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (2, 2, '200 m medley');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (2, 2, 'MedalBronze', 2019, 'Lima');

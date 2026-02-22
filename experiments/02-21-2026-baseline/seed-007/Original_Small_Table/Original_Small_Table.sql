@@ -1,0 +1,14 @@
+CREATE TABLE Athlete (athlete_id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE Tournament (tournament_id INTEGER PRIMARY KEY, athlete_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Format (format_id INTEGER PRIMARY KEY, tournament_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Medal (medal_id INTEGER PRIMARY KEY, format_id INTEGER, type TEXT NOT NULL, year INTEGER, location TEXT NOT NULL);
+CREATE TABLE PersonalInformation (info_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, athlete_id INTEGER, birth_year INTEGER, birth_month INTEGER, birth_day INTEGER);
+INSERT INTO Athlete (athlete_id, name) VALUES (1, 'Geoff Hunt');
+INSERT INTO PersonalInformation (athlete_id, birth_year, birth_month, birth_day) VALUES (1, 1947, 3, 11);
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (1, 1, 'World Championships');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (1, 1, 'Singles');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (1, 1, 'MedalGold', 1976, 'London');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (2, 1, 'MedalGold', 1977, 'Adelaide');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (3, 1, 'MedalGold', 1979, 'Toronto');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (4, 1, 'MedalGold', 1980, 'Adelaide');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (5, 1, 'MedalSilver', 1981, 'Toronto');

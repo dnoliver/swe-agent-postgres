@@ -1,0 +1,10 @@
+CREATE TABLE Athlete (athlete_id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE Tournament (tournament_id INTEGER PRIMARY KEY, athlete_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Format (format_id INTEGER PRIMARY KEY, tournament_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Medal (medal_id INTEGER PRIMARY KEY, format_id INTEGER, type TEXT NOT NULL, year INTEGER, location TEXT NOT NULL);
+CREATE TABLE PersonalInformation (info_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, athlete_id INTEGER, birth_year INTEGER, birth_month INTEGER, birth_day INTEGER);
+INSERT INTO Athlete (athlete_id, name) VALUES (1, 'Yuta Watanabe');
+INSERT INTO PersonalInformation (athlete_id, birth_year, birth_month, birth_day) VALUES (1, 1994, 10, 13);
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (1, 1, 'East Asia Basketball Championship');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (1, 1, 'Team');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (1, 1, 'MedalBronze', 2013, 'Incheon');

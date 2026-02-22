@@ -1,0 +1,17 @@
+CREATE TABLE Athlete (athlete_id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE Tournament (tournament_id INTEGER PRIMARY KEY, athlete_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Format (format_id INTEGER PRIMARY KEY, tournament_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Medal (medal_id INTEGER PRIMARY KEY, format_id INTEGER, type TEXT NOT NULL, year INTEGER, location TEXT NOT NULL);
+CREATE TABLE PersonalInformation (info_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, athlete_id INTEGER, birth_year INTEGER, birth_month INTEGER, birth_day INTEGER);
+INSERT INTO Athlete (athlete_id, name) VALUES (1, 'Pitha Haningtyas Mentari');
+INSERT INTO PersonalInformation (athlete_id, birth_year, birth_month, birth_day) VALUES (1, 1999, 7, 1);
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (1, 1, 'SEA Games');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (1, 1, 'Women''s team');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (1, 1, 'MedalSilver', 2019, 'Philippines');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (2, 1, 'MedalSilver', 2021, 'Vietnam');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (2, 1, 'Mixed doubles');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (3, 2, 'MedalBronze', 2019, 'Philippines');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (4, 2, 'MedalBronze', 2021, 'Vietnam');
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (2, 1, 'World Junior Championships');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (3, 2, 'Mixed doubles');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (5, 3, 'MedalGold', 2017, 'Yogyakarta');
