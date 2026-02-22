@@ -2,6 +2,7 @@
 
 # Save script for backing up agent configuration and task files
 # This script reads the TASK variable from .env and copies relevant files to .output/
+# Usage: ./scripts/save.sh <id>
 
 set -euo pipefail
 
@@ -30,6 +31,20 @@ warn() {
 # Get the repository root (scripts directory's parent)
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+# Check if id parameter is provided
+if [[ $# -eq 0 ]]; then
+    error_exit "Usage: $0 <id>\n  Example: $0 my-run-001"
+fi
+
+ID="$1"
+
+# Validate id parameter
+if [[ -z "${ID}" ]]; then
+    error_exit "id parameter cannot be empty"
+fi
+
+info "Using id: ${ID}"
+
 # Check if .env file exists
 ENV_FILE="${REPO_ROOT}/.env"
 if [[ ! -f "${ENV_FILE}" ]]; then
@@ -47,7 +62,7 @@ fi
 info "TASK variable found: ${TASK}"
 
 # Define output directory
-OUTPUT_DIR="${REPO_ROOT}/.output"
+OUTPUT_DIR="${REPO_ROOT}/.output/${ID}"
 TASK_OUTPUT_DIR="${OUTPUT_DIR}/${TASK}"
 
 # Create .output directory if it doesn't exist

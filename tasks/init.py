@@ -1,10 +1,9 @@
 # SQL helpers (schema-based methods)
 
-
+import argparse
 from pathlib import Path
 import re
 from jinja2 import Template
-
 
 import pandas as pd
 
@@ -225,6 +224,16 @@ SEED = 0
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Initialize task files from dataset splits"
+    )
+    parser.add_argument(
+        "--seed", type=int, default=0, help="Random seed for sampling (default: 0)"
+    )
+    args = parser.parse_args()
+
+    # Use the seed from command line argument
+    SEED = args.seed
 
     def load_split(name):
         df = pd.read_csv(DATA_DIR / f"{name}.tsv", sep="	")
