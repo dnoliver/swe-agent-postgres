@@ -1,0 +1,1 @@
+SELECT DISTINCT medal.year FROM athlete JOIN tournament ON athlete.athlete_id = tournament.athlete_id JOIN format ON tournament.tournament_id = format.tournament_id JOIN medal ON format.format_id = medal.format_id WHERE athlete.name = 'Andre Cason' AND tournament.name = 'Universiade' ORDER BY medal.year;

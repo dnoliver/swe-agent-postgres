@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM public.athlete a JOIN public.tournament t ON a.athlete_id = t.athlete_id JOIN public.format f ON t.tournament_id = f.tournament_id JOIN public.medal m ON f.format_id = m.format_id WHERE a.name = 'Yuta Watanabe' AND m.type = 'MedalBronze';
