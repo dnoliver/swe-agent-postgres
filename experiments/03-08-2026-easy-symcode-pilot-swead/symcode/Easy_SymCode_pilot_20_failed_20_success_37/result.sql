@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM MEDAL m JOIN FORMAT f ON m.format_id = f.format_id JOIN TOURNAMENT t ON f.tournament_id = t.tournament_id JOIN ATHLETE a ON t.athlete_id = a.athlete_id WHERE a.name = 'Shin Seung-chan' AND m.year = 2011;

@@ -1,0 +1,17 @@
+#!/bin/bash
+echo "=== Verification of Solution ==="
+echo ""
+echo "Question: How many International Bronze Medals did Hugo Calderano win in the 2016?"
+echo ""
+echo "=== Hugo Calderano's Athlete ID ==="
+psql -c "SELECT * FROM ATHLETE WHERE NAME = 'Hugo Calderano';"
+echo ""
+echo "=== All medals won by Hugo Calderano in 2016 ==="
+psql -c "SELECT t.NAME as tournament, f.NAME as format, m.TYPE, m.YEAR, m.LOCATION FROM MEDAL m JOIN FORMAT f ON m.FORMAT_ID = f.FORMAT_ID JOIN TOURNAMENT t ON f.TOURNAMENT_ID = t.TOURNAMENT_ID WHERE t.ATHLETE_ID = 1 AND m.YEAR = 2016;"
+echo ""
+echo "=== International Bronze Medals in 2016 (Query from result.sql) ==="
+psql -c "$(cat result.sql)"
+echo ""
+echo "=== Final Answer (from result.txt) ==="
+cat result.txt
+echo ""

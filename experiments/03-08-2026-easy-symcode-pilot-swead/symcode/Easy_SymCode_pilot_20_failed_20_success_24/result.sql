@@ -1,0 +1,8 @@
+SELECT 
+    (COUNT(CASE WHEN m.type = 'MedalBronze' THEN 1 END) > COUNT(CASE WHEN m.type = 'MedalGold' THEN 1 END)) AS has_more_bronze_than_gold
+FROM athlete a
+JOIN tournament t ON a.athlete_id = t.athlete_id
+JOIN format f ON t.tournament_id = f.tournament_id
+JOIN medal m ON f.format_id = m.format_id
+WHERE a.name = 'Amr Shabana'
+AND t.name = 'World Championships';

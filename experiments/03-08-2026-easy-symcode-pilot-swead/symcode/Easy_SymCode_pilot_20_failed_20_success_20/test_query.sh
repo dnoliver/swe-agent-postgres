@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Test query to find all formats in which Charlotte Fry has won medals
+psql -c "
+SELECT DISTINCT f.NAME 
+FROM ATHLETE a
+JOIN TOURNAMENT t ON a.ATHLETE_ID = t.ATHLETE_ID
+JOIN FORMAT f ON t.TOURNAMENT_ID = f.TOURNAMENT_ID
+JOIN MEDAL m ON f.FORMAT_ID = m.FORMAT_ID
+WHERE a.NAME = 'Charlotte Fry'
+ORDER BY f.NAME;
+"

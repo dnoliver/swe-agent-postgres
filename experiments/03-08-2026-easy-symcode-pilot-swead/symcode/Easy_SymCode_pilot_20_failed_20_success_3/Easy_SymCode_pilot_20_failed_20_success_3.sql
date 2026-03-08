@@ -1,0 +1,15 @@
+CREATE TABLE Athlete (athlete_id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE Tournament (tournament_id INTEGER PRIMARY KEY, athlete_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Format (format_id INTEGER PRIMARY KEY, tournament_id INTEGER, name TEXT NOT NULL);
+CREATE TABLE Medal (medal_id INTEGER PRIMARY KEY, format_id INTEGER, type TEXT NOT NULL, year INTEGER, location TEXT NOT NULL);
+CREATE TABLE PersonalInformation (info_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, athlete_id INTEGER, birth_year INTEGER, birth_month INTEGER, birth_day INTEGER);
+INSERT INTO Athlete (athlete_id, name) VALUES (1, 'Dinja van Liere');
+INSERT INTO PersonalInformation (athlete_id, birth_year, birth_month, birth_day) VALUES (1, 1990, 8, 16);
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (1, 1, 'World Equestrian Games');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (1, 1, 'Individual special dressage');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (1, 1, 'MedalBronze', 2022, 'Herning');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (2, 1, 'Individual freestyle dressage');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (2, 2, 'MedalBronze', 2022, 'Herning');
+INSERT INTO Tournament (tournament_id, athlete_id, name) VALUES (2, 1, 'World Championships for Young Horses');
+INSERT INTO Format (format_id, tournament_id, name) VALUES (3, 2, 'Individual dressage');
+INSERT INTO Medal (medal_id, format_id, type, year, location) VALUES (3, 3, 'MedalBronze', 2012, 'Verden');

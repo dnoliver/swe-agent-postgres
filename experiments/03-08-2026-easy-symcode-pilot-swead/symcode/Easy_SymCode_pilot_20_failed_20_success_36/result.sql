@@ -1,0 +1,7 @@
+SELECT COUNT(*) as international_bronze_medals
+FROM ATHLETE a
+JOIN TOURNAMENT t ON a.ATHLETE_ID = t.ATHLETE_ID
+JOIN FORMAT f ON t.TOURNAMENT_ID = f.TOURNAMENT_ID
+JOIN MEDAL m ON f.FORMAT_ID = m.FORMAT_ID
+WHERE a.NAME = 'Valéria Kumizaki' 
+  AND m.TYPE = 'MedalBronze';

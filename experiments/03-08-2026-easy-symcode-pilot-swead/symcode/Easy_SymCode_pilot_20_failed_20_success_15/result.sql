@@ -1,0 +1,8 @@
+SELECT COUNT(*)
+FROM MEDAL m
+JOIN FORMAT f ON m.FORMAT_ID = f.FORMAT_ID
+JOIN TOURNAMENT t ON f.TOURNAMENT_ID = t.TOURNAMENT_ID
+WHERE t.ATHLETE_ID = 1
+  AND m.YEAR = 2016
+  AND m.TYPE = 'MedalBronze'
+  AND t.NAME IN ('WTT Cup Finals', 'ITTF World Tour Grand Finals', 'Youth Olympic Games');

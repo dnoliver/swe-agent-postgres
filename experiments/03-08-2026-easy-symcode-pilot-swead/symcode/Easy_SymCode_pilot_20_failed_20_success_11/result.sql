@@ -1,0 +1,8 @@
+SELECT COUNT(*) AS silver_medals_count
+FROM ATHLETE a
+JOIN TOURNAMENT t ON a.ATHLETE_ID = t.ATHLETE_ID
+JOIN FORMAT f ON t.TOURNAMENT_ID = f.TOURNAMENT_ID
+JOIN MEDAL m ON f.FORMAT_ID = m.FORMAT_ID
+WHERE a.NAME = 'Charlotte Dujardin'
+  AND t.NAME = 'Olympic Games'
+  AND m.TYPE = 'MedalSilver';

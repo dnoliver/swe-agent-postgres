@@ -1,0 +1,10 @@
+SELECT EXISTS (
+  SELECT 1
+  FROM athlete a
+  JOIN tournament t ON a.athlete_id = t.athlete_id
+  JOIN format f ON t.tournament_id = f.tournament_id
+  JOIN medal m ON f.format_id = m.format_id
+  WHERE a.name = 'Tyson Gay' 
+    AND t.name = 'NACAC U' 
+    AND m.type = 'MedalBronze'
+) as has_bronze_medal;
