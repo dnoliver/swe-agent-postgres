@@ -77,7 +77,7 @@ Before running this project, ensure you have the following installed:
 Start all services using Docker Compose:
 
 ```bash
-docker compose up -d
+docker compose up --build -d
 ```
 
 This will launch three services:
