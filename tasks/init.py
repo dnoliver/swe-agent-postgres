@@ -217,7 +217,8 @@ DATA_DIR = (
     / "external"
     / "nsum"
     / "Dataset"
-    / "Test_Dataset_with_Splits"
+    / "pilote_Dataset"
+    # / "Test_Dataset_with_Splits"
 )
 MAX_ROWS_PER_SPLIT = 1
 SEED = 0
@@ -244,21 +245,36 @@ if __name__ == "__main__":
         return df
 
     splits = {
-        "Original": load_split("Original"),
-        "CounterFactual": load_split("CounterFactual"),
-        "Original_Small_Table": load_split("Original_Small_Table"),
-        "Original_Large_Table": load_split("Original_Large_Table"),
-        "Easy": load_split("Easy"),
-        "Medium": load_split("Medium"),
-        "Hard": load_split("Hard"),
+        "Easy_SymCode_pilot_20_failed_20_success": load_split("Easy_SymCode_pilot_20_failed_20_success"),
+        # "CounterFactual": load_split("CounterFactual"),
+        # "Original_Small_Table": load_split("Original_Small_Table"),
+        # "Original_Large_Table": load_split("Original_Large_Table"),
+        # "Easy": load_split("Easy"),
+        # "Medium": load_split("Medium"),
+        # "Hard": load_split("Hard"),
     }
 
     for key in splits:
         print(f"Processing split: {key}")
-        build_sqlite_db_to_file(context=splits[key]["Context"], filepath=f"{key}.sql")
-        splits[key][["Questions", "Answers"]].to_csv(f"{key}.txt", index=False)
-        template_text = Path("TASK.md.j2").read_text()
-        template = Template(template_text)
-        first_question = splits[key]["Questions"].iloc[0]
-        output = template.render(question=first_question)
-        Path(f"{key}.md").write_text(output)
+        df = splits[key]
+        
+        # Iterate over each row in the dataframe
+        for idx, row in df.iterrows():
+            # Create unique filenames for each row
+            base_filename = f"{key}_{idx}"
+            
+            # Generate SQL file for this row's context
+            build_sqlite_db_to_file(context=[row["Context"]], filepath=f"{base_filename}.sql")
+            
+            # Write question and answer to txt file
+            with open(f"{base_filename}.txt", "w") as f:
+                f.write(f"Questions,Answers\n")
+                f.write(f'"{row["Questions"]}","{row["Answers"]}"\n')
+            
+            # Generate markdown file for this row's question
+            template_text = Path("TASK.md.j2").read_text()
+            template = Template(template_text)
+            output = template.render(question=row["Questions"])
+            Path(f"{base_filename}.md").write_text(output)
+            
+            print(f"  Generated files for row {idx}: {base_filename}.{{sql,txt,md}}")
