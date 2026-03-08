@@ -31,9 +31,9 @@ class ResultChecker:
         self.passed = 0
         self.failed = 0
 
-    def normalize_answer(self, answer: str) -> str:
-        """Normalize answer for comparison by removing extra whitespace."""
-        return " ".join(answer.strip().split())
+    def normalize_answer(self, answer: str) -> set:
+        """Normalize answer for comparison by splitting on commas and trimming elements."""
+        return {item.strip().lower() for item in answer.split(",") if item.strip()}
 
     def get_detailed_diff(self, expected: str, actual: str) -> str:
         """Generate a character-level diff between expected and actual."""
