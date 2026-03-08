@@ -28,4 +28,4 @@ warn() {
 }
 
 info "Cleaning folder ./agent"
-git clean agent/ -fxdi
+git clean agent/ -fxd

@@ -197,7 +197,7 @@ class ResultChecker:
 
         # Walk through seed directories
         for seed_dir in sorted(self.output_dir.iterdir()):
-            if not seed_dir.is_dir() or not seed_dir.name.startswith("seed-"):
+            if not seed_dir.is_dir():
                 continue
 
             seed_id = seed_dir.name
