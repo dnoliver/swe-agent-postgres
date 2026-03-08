@@ -229,12 +229,18 @@ if __name__ == "__main__":
         description="Initialize task files from dataset splits"
     )
     parser.add_argument(
-        "--seed", type=int, default=0, help="Random seed for sampling (default: 0)"
+        "--rows", type=int, default=MAX_ROWS_PER_SPLIT, help=f"How many rows to load (default: {MAX_ROWS_PER_SPLIT})"
+    )
+    parser.add_argument(
+        "--seed", type=int, default=SEED, help=f"Random seed for sampling (default: {SEED})"
     )
     args = parser.parse_args()
 
     # Use the seed from command line argument
     SEED = args.seed
+
+    # Use the number of rows from command line argument
+    MAX_ROWS_PER_SPLIT = args.rows
 
     def load_split(name):
         df = pd.read_csv(DATA_DIR / f"{name}.tsv", sep="	")
