@@ -183,6 +183,27 @@ docker compose down -v
     └── requirements.txt  # Dependencies for task generation
 ```
 
+### Statistics
+
+**Get Prompt Tokens for Experiment:**
+
+Prompt Tokens is measured as the token lenght of the input at message number 4,
+where the system prompt, user prompt, and task input is sent to the inference
+service so it can run the task:
+
+```bash
+jq '[.messages[4].extra.response.usage.prompt_tokens // 0] | add' trajectory.json
+```
+
+**Get Total Completion Tokens For Experiment:**
+
+Completion Tokens is measured as the sum of all the completion tokens that the
+inference service returned for the task session:
+
+```bash
+jq '[.messages[].extra.response.usage.completion_tokens // 0] | add' trajectory.json
+```
+
 ## Some Links
 
 - [pgAdmin - Container Deployment - Environment Variables](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html#environment-variables)
