@@ -1,5 +1,7 @@
 import os
 import csv
+import random
+import argparse
 from pathlib import Path
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
@@ -11,11 +13,21 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# Sampling parameters
+SEED = 0
+MAX_SAMPLES = 10
+
 # Few-shot examples for classification
 EXAMPLES = """
-Easy: List all customers from the customers table
-Medium: Find the total sales per product category for the last quarter
-Hard: Calculate the running average of order values per customer, partitioned by region, excluding outliers beyond 2 standard deviations
+Easy: Does Jessica von Bredow-Werndl have more Bronze Medals than Gold Medals?
+Easy: How many International Bronze Medals did Christian Coleman win in the 2017?
+Easy: List all the formats in which Diego Elías has won medals in?
+Medium: Which city did Bastian Steger win his/her most recent medal?
+Medium: Which city did Luigi Busà win his/her most recent medal?
+Medium: Which tournament(s) has Jonathan Horne won the most Medals in?
+Hard: How many medals did Dinja van Liere win in his/her thirties?
+Hard: How many medals did Darrell Pace win in his/her twenties?
+Hard: How many medals did Laura Graves win in his/her twenties?
 """
 
 # Create the prompt template
@@ -27,11 +39,6 @@ prompt = ChatPromptTemplate.from_messages(
 
 Examples:
 {examples}
-
-Rules:
-- Easy: Simple SELECT, basic WHERE, single table
-- Medium: JOINs, GROUP BY, aggregations, date filtering
-- Hard: Window functions, CTEs, subqueries, complex logic, statistical operations
 
 Respond with ONLY one word: easy, medium, or hard""",
         ),
@@ -76,6 +83,22 @@ def load_test_data(dataset_path: str, difficulty: str) -> list[tuple[str, str]]:
                 questions.append((question, expected_difficulty))
     
     return questions
+
+
+def sample_data(questions: list[tuple[str, str]], seed: int = SEED, max_samples: int = MAX_SAMPLES) -> list[tuple[str, str]]:
+    """Sample a subset of questions using the specified seed and max samples."""
+    if max_samples <= 0:
+        return questions
+    
+    # Set the random seed for reproducibility
+    random.seed(seed)
+    
+    # If we have fewer questions than max_samples, return all of them
+    if len(questions) <= max_samples:
+        return questions
+    
+    # Sample max_samples questions randomly
+    return random.sample(questions, max_samples)
 
 
 def evaluate_accuracy(
@@ -139,6 +162,10 @@ if __name__ == "__main__":
             
             print(f"Loaded {len(test_data)} questions from {difficulty}.tsv")
             
+            # Sample the data
+            test_data = sample_data(test_data, seed=SEED, max_samples=MAX_SAMPLES)
+            print(f"Sampled {len(test_data)} questions (seed={SEED}, max_samples={MAX_SAMPLES})")
+            
             accuracy, correct, total, results = evaluate_accuracy(test_data, provider="openai")
             
             print(f"{difficulty} Results:")
@@ -171,6 +198,10 @@ if __name__ == "__main__":
                 continue
             
             print(f"Loaded {len(test_data)} questions from {difficulty}.tsv")
+            
+            # Sample the data
+            test_data = sample_data(test_data, seed=SEED, max_samples=MAX_SAMPLES)
+            print(f"Sampled {len(test_data)} questions (seed={SEED}, max_samples={MAX_SAMPLES})")
             
             accuracy, correct, total, results = evaluate_accuracy(test_data, provider="anthropic")
             
